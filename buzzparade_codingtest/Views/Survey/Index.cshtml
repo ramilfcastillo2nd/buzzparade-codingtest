@@ -1,0 +1,31 @@
+﻿@model IEnumerable<buzzparade_codingtest.DTOs.SurveyListDto>
+@{
+    ViewBag.Title = "Survey List";
+}
+
+<h2>@ViewBag.Title</h2>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Question</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var survey in Model)
+        {
+            <tr>
+                <td>@survey.FullName</td>
+                <td>@survey.Email</td>
+                <td>@survey.Question</td>
+                <td>
+                    <a class="btn btn-link" href="@Url.Action("Edit", "Survey", new { id = survey.Id })">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

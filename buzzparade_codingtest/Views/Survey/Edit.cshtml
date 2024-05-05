@@ -1,0 +1,52 @@
+﻿@model buzzparade_codingtest.DTOs.SurveyDetailDto
+@{
+    ViewBag.Title = "Edit Survey";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Question">Question: </label>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Question)
+        @Html.HiddenFor(m => m.IsMultipleChoice)
+        @Html.HiddenFor(m => m.SurveyAnswer.Id)
+        @for (int i = 0; i < Model.SurveyAnswers.Count; i++)
+        {
+            @Html.HiddenFor(m => m.SurveyAnswers[i].Id)
+            @Html.HiddenFor(m => m.SurveyAnswers[i].Answer)
+        } 
+        <span asp-for="@Model.Question">@Model.Question</span>
+    </div>
+    <div class="col-12 mt-2">
+        @if (Model.IsMultipleChoice)
+        {
+            for (int i = 0; i < Model.SurveyAnswers.Count; i++)
+            {
+                <div class="row">
+                    <div>
+                        @Html.HiddenFor(m => m.SurveyAnswers[i].Id)
+                        @Html.CheckBoxFor(m => m.SurveyAnswers[i].IsSelected)
+                        <label>@Model.SurveyAnswers[i].Answer</label>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="row">
+                <div>
+                    <label asp-for="@Model.SurveyAnswer.AnswerText">Answer: </label>
+                    @Html.TextAreaFor(m => m.SurveyAnswer.AnswerText, new { @class = "form-control" })
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <a href="@Url.Action("Index", "Survey")" class="btn btn-primary">Back</a>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
